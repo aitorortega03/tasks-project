@@ -8,7 +8,7 @@ const tasksExamle = [
 ]
 
 function App() {
-  const [tasks, setTasks] = useState([])
+  const [tasks, setTasks] = useState(tasksExamle)
 
   return (
     <div className='page'>
@@ -35,7 +35,7 @@ function App() {
 
         <section>
           {/* Task list */}
-          {tasks ?
+          {tasks.length !== 0 ?
             <ul>
               {tasks.map(task => (
                 <li key={task.id}>
