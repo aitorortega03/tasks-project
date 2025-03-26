@@ -12,3 +12,31 @@ form {
   display: flex;
   justify-content: center;
 }
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--background);
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+li input[type="checkbox"] {
+  margin: 0;
+}
+
+li span {
+  flex: 1;
+}
+
+li button {
+  margin-left: auto;
+}
