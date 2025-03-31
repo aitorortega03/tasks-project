@@ -2,13 +2,28 @@ import { useState } from 'react'
 import './App.css'
 
 const tasksExamle = [
-  { id: 1, text: 'Learn React', completed: false },
+  { id: 1, text: 'Learn React', completed: true },
   { id: 2, text: 'Learn Firebase', completed: false },
   { id: 3, text: 'Learn CSS', completed: false }
 ]
 
 function App() {
   const [tasks, setTasks] = useState(tasksExamle)
+
+  const handleCheckTask = (taskId, event) => {
+    const newTasks = tasks.map(task => {
+      if (task.id === taskId) {
+        return { ...task, completed: event.target.checked }
+      }
+      return task
+    })
+    setTasks(newTasks)
+  }
+
+  const handleDeleteTask = (taskId) => {
+    const newTasks = tasks.filter(task => task.id !== taskId)
+    setTasks(newTasks)
+  }
 
   return (
     <div className='page'>
@@ -39,9 +54,9 @@ function App() {
             <ul>
               {tasks.map(task => (
                 <li key={task.id}>
-                  <input type="checkbox" />
+                  <input type="checkbox" checked={task.completed} onChange={(event) => handleCheckTask(task.id, event)} />
                   <span>{task.text}</span>
-                  <button>Delete</button>
+                  <button onClick={() => handleDeleteTask(task.id)}>Delete</button>
                 </li>
               ))}
             </ul>
