@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import './App.css'
 
 const tasksExamle = [
@@ -24,6 +24,15 @@ function App() {
     const newTasks = tasks.filter(task => task.id !== taskId)
     setTasks(newTasks)
   }
+
+  const completedTasksNumber = useMemo(() => {
+    return tasks.filter(task => task.completed).length
+  }, [tasks])
+
+  const completedTaskPercentage = useMemo(() => {
+    if (tasks.length === 0) return 0
+    return Math.round((completedTasksNumber / tasks.length) * 100)
+  }, [completedTasksNumber, tasks])
 
   return (
     <div className='page'>
@@ -67,12 +76,12 @@ function App() {
           <h2>Productivity Stats</h2>
           <div>
             <div>
-              <span>Completed tasks </span>
-              <span>0</span>
+              <span>Completed tasks: </span>
+              <span>{completedTasksNumber}</span>
             </div>
             <div>
-              <span>Porcentaje de Progreso </span>
-              <span>0%</span>
+              <span>Porcentaje de Progreso: </span>
+              <span>{completedTaskPercentage}%</span>
             </div>
           </div>
         </section>
