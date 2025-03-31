@@ -49,7 +49,6 @@ function App() {
         </section>
 
         <section>
-          {/* Task list */}
           {tasks.length !== 0 ?
             <ul>
               {tasks.map(task => (
