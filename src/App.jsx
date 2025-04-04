@@ -1,15 +1,25 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 
-const tasksExamle = [
-  { id: 1, text: 'Learn React', completed: true },
-  { id: 2, text: 'Learn Firebase', completed: false },
-  { id: 3, text: 'Learn CSS', completed: false }
-]
+function getTasks() {
+  return localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : []
+}
+
+function saveTasks(tasks) {
+  localStorage.setItem('tasks', JSON.stringify(tasks))
+}
 
 function App() {
-  const [tasks, setTasks] = useState(tasksExamle)
+  const [tasks, setTasks] = useState([])
   const [inputValue, setInputValue] = useState('')
+
+  useEffect(() => {
+    const storedTasks = getTasks()
+    if (storedTasks.length > 0) {
+      setTasks(storedTasks)
+    }
+  }
+  , [])
 
   const handleCreateTask = (event) => {
     event.preventDefault()
@@ -20,6 +30,7 @@ function App() {
     }
     setTasks([...tasks, newTask])
     setInputValue('')
+    saveTasks([...tasks, newTask])
   }
 
   const handleCheckTask = (taskId, event) => {
@@ -30,11 +41,13 @@ function App() {
       return task
     })
     setTasks(newTasks)
+    saveTasks(newTasks)
   }
 
   const handleDeleteTask = (taskId) => {
     const newTasks = tasks.filter(task => task.id !== taskId)
     setTasks(newTasks)
+    saveTasks(newTasks)
   }
 
   const completedTasksNumber = useMemo(() => {
