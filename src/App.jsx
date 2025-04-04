@@ -9,6 +9,18 @@ const tasksExamle = [
 
 function App() {
   const [tasks, setTasks] = useState(tasksExamle)
+  const [inputValue, setInputValue] = useState('')
+
+  const handleCreateTask = (event) => {
+    event.preventDefault()
+    const newTask = {
+      id: tasks.length + 1,
+      text: inputValue,
+      completed: false
+    }
+    setTasks([...tasks, newTask])
+    setInputValue('')
+  }
 
   const handleCheckTask = (taskId, event) => {
     const newTasks = tasks.map(task => {
@@ -36,16 +48,18 @@ function App() {
 
   return (
     <div className='page'>
-      <header>
+      <header onClick={() => console.log(tasks)}>
         <h1>Tasks Project</h1>
       </header>
       <main>
 
         <section>
-          <form>
+          <form onSubmit={handleCreateTask}>
             <input
               type="text"
               placeholder="Add new task"
+              value={inputValue}
+              onChange={(event) => setInputValue(event.target.value)}
             />
             <button type="submit">Add task</button>
           </form>
