@@ -1,4 +1,20 @@
-export function TaskList({ tasks, handleCheckTask, handleDeleteTask }) {
+export function TaskList({ tasks, saveTasks }) {
+
+const handleCheckTask = (taskId, event) => {
+    const newTasks = tasks.map(task => {
+      if (task.id === taskId) {
+        return { ...task, completed: event.target.checked }
+      }
+      return task
+    })
+    saveTasks(newTasks)
+  }
+
+  const handleDeleteTask = (taskId) => {
+    const newTasks = tasks.filter(task => task.id !== taskId)
+    saveTasks(newTasks)
+  }
+
   return (
     <section>
           {tasks.length !== 0 ?

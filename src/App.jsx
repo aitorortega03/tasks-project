@@ -16,21 +16,6 @@ function App() {
     saveTasks([...tasks, newTask])
   }
 
-  const handleCheckTask = (taskId, event) => {
-    const newTasks = tasks.map(task => {
-      if (task.id === taskId) {
-        return { ...task, completed: event.target.checked }
-      }
-      return task
-    })
-    saveTasks(newTasks)
-  }
-
-  const handleDeleteTask = (taskId) => {
-    const newTasks = tasks.filter(task => task.id !== taskId)
-    saveTasks(newTasks)
-  }
-
   const completedTasksNumber = useMemo(() => {
     return tasks.filter(task => task.completed).length
   }, [tasks])
@@ -55,7 +40,7 @@ function App() {
           <button>Completadas</button>
         </section>
 
-        <TaskList tasks={tasks} handleCheckTask={handleCheckTask} handleDeleteTask={handleDeleteTask} />
+        <TaskList tasks={tasks} saveTasks={saveTasks}/>
 
         <section>
           <h2>Productivity Stats</h2>
