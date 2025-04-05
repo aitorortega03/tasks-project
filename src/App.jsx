@@ -7,16 +7,6 @@ import { ProductivityStats } from './components/ProductivityStats'
 function App() {
   const { tasks, saveTasks } = useTasks()
 
-  const handleCreateTask = (text) => {
-    const newTask = {
-      id: tasks.length + 1,
-      text: text,
-      completed: false
-    }
-    saveTasks([...tasks, newTask])
-  }
-
-
   return (
     <div className='page'>
       <header>
@@ -24,7 +14,7 @@ function App() {
       </header>
       <main>
 
-        <CreateTask handleCreateTask={handleCreateTask} />
+        <CreateTask tasks={tasks} saveTasks={saveTasks} />
 
         <section>
           <button>Todas</button>

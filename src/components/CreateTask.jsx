@@ -1,11 +1,16 @@
 import { useState } from "react"
 
-export function CreateTask({ handleCreateTask }) {
+export function CreateTask({ tasks, saveTasks }) {
   const [inputValue, setInputValue] = useState('')
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    handleCreateTask(inputValue)
+    const newTask = {
+      id: tasks.length + 1,
+      text: inputValue,
+      completed: false
+    }
+    saveTasks([...tasks, newTask])
     setInputValue('')
   }
 
