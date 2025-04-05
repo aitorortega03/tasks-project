@@ -1,19 +1,17 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import './App.css'
 import { useTasks } from './hooks/useTasks'
+import { CreateTask } from './components/CreateTask'
 
 function App() {
   const { tasks, saveTasks } = useTasks()
-  const [inputValue, setInputValue] = useState('')
 
-  const handleCreateTask = (event) => {
-    event.preventDefault()
+  const handleCreateTask = (text) => {
     const newTask = {
       id: tasks.length + 1,
-      text: inputValue,
+      text: text,
       completed: false
     }
-    setInputValue('')
     saveTasks([...tasks, newTask])
   }
 
@@ -48,17 +46,7 @@ function App() {
       </header>
       <main>
 
-        <section>
-          <form onSubmit={handleCreateTask}>
-            <input
-              type="text"
-              placeholder="Add new task"
-              value={inputValue}
-              onChange={(event) => setInputValue(event.target.value)}
-            />
-            <button type="submit">Add task</button>
-          </form>
-        </section>
+        <CreateTask handleCreateTask={handleCreateTask} />
 
         <section>
           <button>Todas</button>
