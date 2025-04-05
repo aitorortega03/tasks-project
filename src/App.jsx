@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import './App.css'
 import { useTasks } from './hooks/useTasks'
 import { CreateTask } from './components/CreateTask'
+import { TaskList } from './components/TaskList'
 
 function App() {
   const { tasks, saveTasks } = useTasks()
@@ -54,20 +55,7 @@ function App() {
           <button>Completadas</button>
         </section>
 
-        <section>
-          {tasks.length !== 0 ?
-            <ul>
-              {tasks.map(task => (
-                <li key={task.id}>
-                  <input type="checkbox" checked={task.completed} onChange={(event) => handleCheckTask(task.id, event)} />
-                  <span>{task.text}</span>
-                  <button onClick={() => handleDeleteTask(task.id)}>Delete</button>
-                </li>
-              ))}
-            </ul>
-            : <p>No tasks</p>
-          }
-        </section>
+        <TaskList tasks={tasks} handleCheckTask={handleCheckTask} handleDeleteTask={handleDeleteTask} />
 
         <section>
           <h2>Productivity Stats</h2>
