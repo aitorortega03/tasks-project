@@ -43,7 +43,7 @@ function App() {
 
   return (
     <div className='page'>
-      <header onClick={() => console.log(tasks)}>
+      <header>
         <h1>Tasks Project</h1>
       </header>
       <main>
