@@ -1,8 +1,8 @@
-import { useMemo } from 'react'
 import './App.css'
 import { useTasks } from './hooks/useTasks'
 import { CreateTask } from './components/CreateTask'
 import { TaskList } from './components/TaskList'
+import { ProductivityStats } from './components/ProductivityStats'
 
 function App() {
   const { tasks, saveTasks } = useTasks()
@@ -16,14 +16,6 @@ function App() {
     saveTasks([...tasks, newTask])
   }
 
-  const completedTasksNumber = useMemo(() => {
-    return tasks.filter(task => task.completed).length
-  }, [tasks])
-
-  const completedTaskPercentage = useMemo(() => {
-    if (tasks.length === 0) return 0
-    return Math.round((completedTasksNumber / tasks.length) * 100)
-  }, [completedTasksNumber, tasks])
 
   return (
     <div className='page'>
@@ -41,20 +33,7 @@ function App() {
         </section>
 
         <TaskList tasks={tasks} saveTasks={saveTasks}/>
-
-        <section>
-          <h2>Productivity Stats</h2>
-          <div>
-            <div>
-              <span>Completed tasks: </span>
-              <span>{completedTasksNumber}</span>
-            </div>
-            <div>
-              <span>Porcentaje de Progreso: </span>
-              <span>{completedTaskPercentage}%</span>
-            </div>
-          </div>
-        </section>
+        <ProductivityStats tasks={tasks} />
       </main>
     </div>
   )
