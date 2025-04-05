@@ -1,25 +1,10 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import './App.css'
-
-function getTasks() {
-  return localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : []
-}
-
-function saveTasks(tasks) {
-  localStorage.setItem('tasks', JSON.stringify(tasks))
-}
+import { useTasks } from './hooks/useTasks'
 
 function App() {
-  const [tasks, setTasks] = useState([])
+  const { tasks, saveTasks } = useTasks()
   const [inputValue, setInputValue] = useState('')
-
-  useEffect(() => {
-    const storedTasks = getTasks()
-    if (storedTasks.length > 0) {
-      setTasks(storedTasks)
-    }
-  }
-  , [])
 
   const handleCreateTask = (event) => {
     event.preventDefault()
@@ -28,7 +13,6 @@ function App() {
       text: inputValue,
       completed: false
     }
-    setTasks([...tasks, newTask])
     setInputValue('')
     saveTasks([...tasks, newTask])
   }
@@ -40,13 +24,11 @@ function App() {
       }
       return task
     })
-    setTasks(newTasks)
     saveTasks(newTasks)
   }
 
   const handleDeleteTask = (taskId) => {
     const newTasks = tasks.filter(task => task.id !== taskId)
-    setTasks(newTasks)
     saveTasks(newTasks)
   }
 
